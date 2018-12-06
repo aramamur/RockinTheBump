@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrackAppt">
+
+    <Button
+        android:id="@+id/apptDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="showDatePicker"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apptid" />
+
+    <EditText
+        android:id="@+id/editDesc"
+        android:layout_width="289dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Appointment Description"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apptDateButton" />
+
+    <EditText
+        android:id="@+id/apptid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Appt ID No"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/createstatus"
+        android:layout_width="231dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="Creation Status"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addbutton" />
+
+    <Button
+        android:id="@+id/addbutton"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="addAppointment"
+        android:text="Add"
+        app:layout_constraintEnd_toStartOf="@+id/deletebutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editDesc" />
+
+    <Button
+        android:id="@+id/deletebutton"
+        android:layout_width="75dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="deleteAppointment"
+        android:text="DELETE"
+        app:layout_constraintEnd_toStartOf="@+id/updatebutton"
+        app:layout_constraintTop_toBottomOf="@+id/editDesc" />
+
+    <Button
+        android:id="@+id/updatebutton"
+        android:layout_width="82dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="updateAppointment"
+        android:text="Update"
+        app:layout_constraintBottom_toTopOf="@+id/createstatus"
+        app:layout_constraintEnd_toStartOf="@+id/findbutton"
+        app:layout_constraintTop_toBottomOf="@+id/editDesc"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/findbutton"
+        android:layout_width="85dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="findAppointment"
+        android:text="Find"
+        app:layout_constraintBottom_toTopOf="@+id/createstatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editDesc"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <Button
+        android:id="@+id/loadbutton"
+        android:layout_width="66dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="loadAppointment"
+        android:text="Load"
+        app:layout_constraintBottom_toTopOf="@+id/createstatus"
+        app:layout_constraintEnd_toStartOf="@+id/findbutton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addbutton"
+        app:layout_constraintTop_toBottomOf="@+id/updatebutton" />
+</android.support.constraint.ConstraintLayout>
