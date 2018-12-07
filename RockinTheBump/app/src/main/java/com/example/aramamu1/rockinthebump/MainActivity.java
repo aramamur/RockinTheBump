@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     String month_string = Integer.toString(month + 1);
     String day_string = Integer.toString(day);
     String year_string = Integer.toString(year);
-    String currentdate = (month_string +
+    String current_date = (month_string +
             "/" + day_string +
             "/" + year_string);
 
@@ -68,12 +68,7 @@ public class MainActivity extends AppCompatActivity
             uweek = mPreferences.getString(WEEK_KEY, uweek);
             uweight = mPreferences.getString(INITWEIGHT_KEY, uweight);
 
-            //get current date
-            final Calendar cal = Calendar.getInstance();
-            int month = cal.get(Calendar.MONTH)+1;
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            int year = cal.get(Calendar.YEAR);
-            String current_date = String.valueOf(month)+"/"+String.valueOf(day)+"/"+String.valueOf(year);
+
 
             if ((uname != null) && !uname.isEmpty()) {
                 textResponse.setText("Welcome " + uname + "!"+System.getProperty("line.separator")+ "You are on week " + uweek + ".");
@@ -154,7 +149,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            textResponse.setText("Welcome to Rockin the Bump!");
+            textResponse.setText("Welcome to Rockin the Bump!"+System.getProperty("line.separator")+"Current Date: "+current_date);
+            appttext.setText("");
             uid = 0;
             //change it so that the shared user data is no longer the person logged in
             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
@@ -201,8 +197,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_pictures) {
             if(uid != 0) {
-                //Intent intent = new Intent(this, xxx.class);
-                //startActivity(intent);
+                Intent intent = new Intent(this, TakePictures.class);
+                startActivity(intent);
             }
             else{
                 textResponse.setText("Please login to access this content!");

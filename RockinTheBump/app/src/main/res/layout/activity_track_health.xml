@@ -20,14 +20,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/dateButton"
-        android:layout_width="114dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/addButton"
+        android:layout_width="93dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="96dp"
+        android:background="@color/design_default_color_primary"
         android:onClick="showAdvice"
-        android:text="Submit"
-        app:layout_constraintEnd_toStartOf="@+id/plotbutton"
+        android:text="Add"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentweight" />
 
@@ -36,16 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Advice on Weight"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="13dp"
+        android:text="Advice on Weight. If not all vitals are filled, it will be filled with 0 for missing vitals."
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/addButton" />
 
     <EditText
         android:id="@+id/bloodpress"
@@ -73,14 +73,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentweight" />
 
-    <Button
-        android:id="@+id/plotbutton"
-        android:layout_width="124dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="32dp"
-        android:text="Plot"
+    <TextView
+        android:id="@+id/healthresults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="100dp"
+        android:text="Health Results Stored"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advice" />
+
+    <Button
+        android:id="@+id/loadButton"
+        android:layout_width="86dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorAccent"
+        android:onClick="loadResults"
+        android:text="Load"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.552"
+        app:layout_constraintStart_toEndOf="@+id/addButton"
         app:layout_constraintTop_toBottomOf="@+id/currentweight" />
 
 </android.support.constraint.ConstraintLayout>

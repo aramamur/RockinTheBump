@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBHandler extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "pregDB.db";
+    private static final String DATABASE_NAME = "new.db";
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_ID = "UserID";
     public static final String COLUMN_NAME = "UserName";
@@ -22,6 +22,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_NAME10 = "UserID";
     public static final String COLUMN_NAME11 = "Date";
     public static final String COLUMN_NAME12 = "Description";
+
+    public static final String TABLE_HEALTH = "health";
+    public static final String COLUMN_ID2 = "HealthID";
+    public static final String COLUMN_NAME20 = "UserID";
+    public static final String COLUMN_NAME21 = "Date";
+    public static final String COLUMN_NAME22 = "Weight";
+    public static final String COLUMN_NAME23 = "BloodPressure";
+    public static final String COLUMN_NAME24 = "FetalHB";
 
 
     //initialize the database
@@ -40,6 +48,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 TABLE_APPOINTMENT + "(" + COLUMN_ID1 + " INTEGER PRIMARY KEY," + COLUMN_NAME10 + " INTEGER, "+ COLUMN_NAME11
                 + " TEXT, " + COLUMN_NAME12 + " TEXT "+")";
         db.execSQL(CREATE_APPOINTMENT_TABLE);
+        String CREATE_HEALTH_TABLE = "CREATE TABLE " +
+                TABLE_HEALTH + "(" + COLUMN_ID2 + " INTEGER PRIMARY KEY," + COLUMN_NAME20
+                + " INTEGER, " + COLUMN_NAME21 + " TEXT, "+ COLUMN_NAME22 + " INTEGER, "+ COLUMN_NAME23
+                + " INTEGER, "+ COLUMN_NAME24 + " INTEGER "+")";
+        db.execSQL(CREATE_HEALTH_TABLE);
 
     }
     @Override
@@ -47,8 +60,62 @@ public class MyDBHandler extends SQLiteOpenHelper {
                           int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HEALTH);
         onCreate(db);
 
+    }
+
+    //for health table
+    //add
+    public void addHealthHandler(Health health) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID2, health.getID());
+        values.put(COLUMN_NAME20, health.getUserID());
+        values.put(COLUMN_NAME21, health.getDate());
+        values.put(COLUMN_NAME22, health.getWeight());
+        values.put(COLUMN_NAME23, health.getBloodpressure());
+        values.put(COLUMN_NAME24, health.getFetalhb());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_HEALTH, null, values);
+        db.close();
+    }
+
+    //load
+    public String loadHealthHandler(int userid) {
+        String result = "";
+        String query = "Select * FROM " + TABLE_HEALTH + " WHERE " +
+                COLUMN_NAME20 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            int result_0 = cursor.getInt(0);
+            int result_1 = cursor.getInt(1);
+            String result_2 = cursor.getString(2);
+            int result_3 = cursor.getInt(3);
+            int result_4 = cursor.getInt(4);
+            int result_5 = cursor.getInt(5);
+
+            result += String.valueOf(result_0) + " " + String.valueOf(result_1) + " " + result_2 + " " + String.valueOf(result_3) +" " + String.valueOf(result_4) +" "+ String.valueOf(result_5) +" "+
+                    System.getProperty("line.separator");
+            while (cursor.moveToNext()) {
+                result_0 = cursor.getInt(0);
+                result_1 = cursor.getInt(1);
+                result_2 = cursor.getString(2);
+                result_3 = cursor.getInt(3);
+                result_4 = cursor.getInt(4);
+                result_5 = cursor.getInt(5);
+
+                result += String.valueOf(result_0) + " " + String.valueOf(result_1) + " " + result_2 + " " + String.valueOf(result_3) +" " + String.valueOf(result_4) +" "+ String.valueOf(result_5) +" "+
+                        System.getProperty("line.separator");
+            }
+            cursor.close();
+        } else {
+            result = null;
+        }
+        cursor.close();
+        db.close();
+        return result;
     }
 
     //for appt table
@@ -188,7 +255,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public String loadHandler() {
-        String result = "";
+        String result = null;
         String query = "Select*FROM " + TABLE_USERS;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -207,6 +274,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public boolean deleteHandler(int userid) {
+        boolean result1 = false;
+        boolean result2 = false;
+        boolean result3 = false;
         boolean result = false;
         String query = "Select*FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + " = '" + String.valueOf(userid) + "'";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -220,9 +290,41 @@ public class MyDBHandler extends SQLiteOpenHelper {
                            String.valueOf(user.getID())
                    });
             cursor.close();
-            result = true;
+            result1 = true;
         }
         db.close();
+        String query1 = "Select*FROM " + TABLE_APPOINTMENT + " WHERE " + COLUMN_NAME10 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        Cursor cursor1 = db1.rawQuery(query1, null);
+        Appointment appt = new Appointment();
+        if (cursor1.moveToFirst()) {
+            appt.setUserID(Integer.parseInt(cursor1.getString(1)));
+
+            db1.delete(TABLE_APPOINTMENT, COLUMN_NAME10 + "=?",
+                    new String[] {
+                            String.valueOf(appt.getUserID())
+                    });
+            cursor1.close();
+            result2 = true;
+        }
+        db1.close();
+
+        String query2 = "Select*FROM " + TABLE_HEALTH + " WHERE " + COLUMN_NAME20 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db2 = this.getWritableDatabase();
+        Cursor cursor2 = db2.rawQuery(query2, null);
+        Health health = new Health();
+        if (cursor2.moveToFirst()) {
+            health.setUserID(Integer.parseInt(cursor2.getString(1)));
+
+            db2.delete(TABLE_HEALTH, COLUMN_NAME20 + "=?",
+                    new String[] {
+                            String.valueOf(health.getUserID())
+                    });
+            cursor2.close();
+            result3 = true;
+        }
+        result = result1 || result2 || result3;
+        db2.close();
         return result;
     }
 

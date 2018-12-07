@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".TakePictures">
+
+
+    <ImageView
+        android:id="@+id/bumppic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/takepic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp" />
+
+    <Button
+        android:id="@+id/takepic"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="178dp"
+        android:background="@color/ic_launcher_background"
+        android:onClick="storePicture"
+        android:text="Take Picture"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textDesc"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/takepic"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-130dp"
+        android:layout_marginEnd="8dp"
+        android:text="This is the place to take a picture to document your journey in pregnancy. Feel free to store ultrasounds, baby bump pics, or even the final product- your baby! This will be stored in your normal camera image gallery."
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

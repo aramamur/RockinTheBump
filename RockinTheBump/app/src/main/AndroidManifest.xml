@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.aramamu1.rockinthebump"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -43,7 +54,11 @@
         <activity
             android:name=".ContractionTimer"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ContactInfo" android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ContactInfo"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".TakePictures" android:parentActivityName=".MainActivity" />
+
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@ public class Settings extends AppCompatActivity {
     EditText userpswd;
     EditText initweight;
 
-
+    private static int id_ctr = 10;
     //store user settings here once we get them- shared preferences
     //preferences object
     private SharedPreferences mPreferences;
@@ -37,6 +37,8 @@ public class Settings extends AppCompatActivity {
     private final String DELIVERYDATE_KEY = "deliveryDate";
     private final String WEEK_KEY = "currentWeek";
     private final String INITWEIGHT_KEY = "initialWeight";
+    String start_date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,6 @@ public class Settings extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         userpswd = (EditText) findViewById(R.id.userpswd);
         initweight = (EditText)findViewById(R.id.initweight);
-
 
     }
 
@@ -96,6 +97,13 @@ public class Settings extends AppCompatActivity {
         String weight = initweight.getText().toString();
         User user = new User(id,name, pswd, ddate, weight);
         dbHandler.addHandler(user);
+        lst.setText("user updated ");
+
+        //put the health stats in the Health database
+
+        Health health = new Health(id_ctr+1, id, start_date, Integer.parseInt(initweight.getText().toString()), 0, 0);
+        dbHandler.addHealthHandler(health);
+
         userid.setText("");
         username.setText("");
         userpswd.setText("");
@@ -123,7 +131,14 @@ public class Settings extends AppCompatActivity {
 
     public void loadUser(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        lst.setText(dbHandler.loadHandler());
+        String response = dbHandler.loadHandler();
+        if(response == null) {
+            lst.setText("No records found.");
+        }
+        else{
+            lst.setText(response);
+        }
+
         userid.setText("");
         username.setText("");
         userpswd.setText("");
@@ -146,8 +161,12 @@ public class Settings extends AppCompatActivity {
             preferencesEditor.apply();
             preferencesEditor.putInt(USERID_KEY, 0);
             preferencesEditor.apply();
-        } else
+        } else {
             lst.setText("No Match Found");
+        }
+
+
+
     }
 
     public void updateUser(View view) {
@@ -174,6 +193,10 @@ public class Settings extends AppCompatActivity {
         //get pregnancy start date
         calendar.add(Calendar.WEEK_OF_YEAR, -40);
         Date startDate = calendar.getTime();
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        start_date = String.valueOf(month)+"/"+String.valueOf(day)+"/"+String.valueOf(year);
 
         //get current date
         final Calendar c = Calendar.getInstance();

@@ -1,21 +1,18 @@
 has the appointment viewer implemented
 Renamed TrackWeight class to Track Health class
 Have the buttons and views in place to implement the database. 
+Created database for health and health class
+Updated to use the weight as the starting weight
+When deleting user deletes appt and health data 
 
 Still needs 
 gallery
 40 tips for each week, includes appointment tips and food tips. 
+* Work on autoincrement for primary key
+* Get better camera
 
 Nice to have:
-
-* Database for Health vitals:
- * Create tables and handlers in Database for Health Tracker:
-   Colums should be: Track weight, BP, Fetal HB, current date, uid
- * Update settings class to add a user's current weight and the date in the database when adding a user.
- * Create a Health class which stores: Track weight, BP, Fetal HB, current date, uid
-
 * Plot of the weight, fetal hb, or bloodpressure.
-
 * Better UI!- some images.
 
 
