@@ -10,8 +10,8 @@ public class Health {
     private int fetalhb;
     // constructors
     public Health() {}
-    public Health(int id, int userid, String date, int weight, int bp, int fetalhb) {
-        this.healthID = id;
+    public Health(int userid, String date, int weight, int bp, int fetalhb) {
+
         this.userID = userid;
         this.date = date;
         this.weight = weight;
@@ -19,12 +19,7 @@ public class Health {
         this.fetalhb = fetalhb;
     }
     // properties
-    public void setID(int id) {
-        this.healthID = id;
-    }
-    public int getID() {
-        return this.healthID;
-    }
+
 
     public void setUserID(int id) {
         this.userID = id;

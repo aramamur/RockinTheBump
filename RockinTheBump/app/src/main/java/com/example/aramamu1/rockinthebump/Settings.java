@@ -22,7 +22,7 @@ public class Settings extends AppCompatActivity {
     EditText userpswd;
     EditText initweight;
 
-    private static int id_ctr = 10;
+
     //store user settings here once we get them- shared preferences
     //preferences object
     private SharedPreferences mPreferences;
@@ -101,7 +101,7 @@ public class Settings extends AppCompatActivity {
 
         //put the health stats in the Health database
 
-        Health health = new Health(id_ctr+1, id, start_date, Integer.parseInt(initweight.getText().toString()), 0, 0);
+        Health health = new Health(id, start_date, Integer.parseInt(initweight.getText().toString()), 0, 0);
         dbHandler.addHealthHandler(health);
 
         userid.setText("");
@@ -132,7 +132,7 @@ public class Settings extends AppCompatActivity {
     public void loadUser(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         String response = dbHandler.loadHandler();
-        if(response == null) {
+        if(response == "") {
             lst.setText("No records found.");
         }
         else{

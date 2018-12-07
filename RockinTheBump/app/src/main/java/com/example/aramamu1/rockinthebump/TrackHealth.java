@@ -28,7 +28,7 @@ public class TrackHealth extends AppCompatActivity {
     private final String DELIVERYDATE_KEY = "deliveryDate";
     private final String WEEK_KEY = "currentWeek";
     private final String INITWEIGHT_KEY = "initialWeight";
-    private static int ctr = 1;
+
 
 
     int    uid;
@@ -86,7 +86,7 @@ public class TrackHealth extends AppCompatActivity {
 
         //add to the database
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        Health health = new Health(ctr+1, uid, current_date, cweight, Integer.parseInt(bloodpress.getText().toString()), Integer.parseInt(fetalhb.getText().toString()) );
+        Health health = new Health(uid, current_date, cweight, Integer.parseInt(bloodpress.getText().toString()), Integer.parseInt(fetalhb.getText().toString()) );
         dbHandler.addHealthHandler(health);
         String create = "Health results added";
         healthresults.setText(create);

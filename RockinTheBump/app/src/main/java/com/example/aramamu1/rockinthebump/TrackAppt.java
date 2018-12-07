@@ -17,7 +17,7 @@ public class TrackAppt extends AppCompatActivity {
             "com.example.aramamu1.rockinthebump";
     private final String USERID_KEY = "userID";
 
-    EditText apptid;
+
     EditText editDesc;
     TextView createstatus;
     String apptDate;
@@ -34,7 +34,6 @@ public class TrackAppt extends AppCompatActivity {
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         uid = mPreferences.getInt(USERID_KEY, uid);
 
-        apptid = (EditText) findViewById(R.id.apptid);
         editDesc = (EditText) findViewById(R.id.editDesc);
         createstatus = (TextView)findViewById(R.id.createstatus);
 
@@ -44,19 +43,17 @@ public class TrackAppt extends AppCompatActivity {
 
     public void addAppointment(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        Appointment appt = new Appointment(Integer.parseInt(apptid.getText().toString()), uid, apptDate, editDesc.getText().toString() );
+        Appointment appt = new Appointment(uid, apptDate, editDesc.getText().toString() );
         dbHandler.addApptHandler(appt);
         String create = "Appointment created "+apptDate+" "+editDesc.getText().toString();
         createstatus.setText(create);
-        apptid.setText("");
         editDesc.setText("");
     }
 
     public void deleteAppointment(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        boolean result = dbHandler.deleteApptHandler(Integer.parseInt(apptid.getText().toString()));
+        boolean result = dbHandler.deleteApptHandler(apptDate);
         if (result) {
-            apptid.setText("");
             editDesc.setText("");
             createstatus.setText("Record deleted");
         } else
@@ -65,9 +62,8 @@ public class TrackAppt extends AppCompatActivity {
 
     public void updateAppointment(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        boolean result = dbHandler.updateApptHandler(Integer.parseInt(apptid.getText().toString()), uid, editDesc.getText().toString(), apptDate);
+        boolean result = dbHandler.updateApptHandler(uid, editDesc.getText().toString(), apptDate);
         if (result) {
-            apptid.setText("");
             editDesc.setText("");
             createstatus.setText("Record Updated");
         } else
@@ -78,12 +74,11 @@ public class TrackAppt extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         Appointment appt = dbHandler.findApptHandler(uid, apptDate);
         if (appt != null) {
-            createstatus.setText(String.valueOf(appt.getID()) +" "+ String.valueOf(appt.getUserID())+" "+appt.getDate()+" "+appt.getDescription());
+            createstatus.setText(String.valueOf(String.valueOf(appt.getUserID())+" "+appt.getDate()+" "+appt.getDescription()));
 
         } else {
             createstatus.setText("No Match Found");
         }
-        apptid.setText("");
         editDesc.setText("");
     }
 
@@ -97,7 +92,6 @@ public class TrackAppt extends AppCompatActivity {
         {
             createstatus.setText("No Match Found");
         }
-        apptid.setText("");
         editDesc.setText("");
 
     }

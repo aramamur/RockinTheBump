@@ -4,12 +4,12 @@ Have the buttons and views in place to implement the database.
 Created database for health and health class
 Updated to use the weight as the starting weight
 When deleting user deletes appt and health data 
+Autoincrement works
+Has ability to take pics but camera functionality and picture storage could use some work
 
-Still needs 
-gallery
+Still needs:
+gallery/better camera
 40 tips for each week, includes appointment tips and food tips. 
-* Work on autoincrement for primary key
-* Get better camera
 
 Nice to have:
 * Plot of the weight, fetal hb, or bloodpressure.

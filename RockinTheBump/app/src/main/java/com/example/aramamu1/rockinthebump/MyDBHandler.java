@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBHandler extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "new.db";
+    private static final String DATABASE_NAME = "new1.db";
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_ID = "UserID";
     public static final String COLUMN_NAME = "UserName";
@@ -45,11 +45,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 + " TEXT, " + COLUMN_NAME1 + " TEXT, "+ COLUMN_NAME2 + " TEXT, "+COLUMN_NAME3 + " TEXT "+")";
         db.execSQL(CREATE_USER_TABLE);
         String CREATE_APPOINTMENT_TABLE = "CREATE TABLE " +
-                TABLE_APPOINTMENT + "(" + COLUMN_ID1 + " INTEGER PRIMARY KEY," + COLUMN_NAME10 + " INTEGER, "+ COLUMN_NAME11
+                TABLE_APPOINTMENT + "(" + COLUMN_ID1 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME10 + " INTEGER, "+ COLUMN_NAME11
                 + " TEXT, " + COLUMN_NAME12 + " TEXT "+")";
         db.execSQL(CREATE_APPOINTMENT_TABLE);
         String CREATE_HEALTH_TABLE = "CREATE TABLE " +
-                TABLE_HEALTH + "(" + COLUMN_ID2 + " INTEGER PRIMARY KEY," + COLUMN_NAME20
+                TABLE_HEALTH + "(" + COLUMN_ID2 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME20
                 + " INTEGER, " + COLUMN_NAME21 + " TEXT, "+ COLUMN_NAME22 + " INTEGER, "+ COLUMN_NAME23
                 + " INTEGER, "+ COLUMN_NAME24 + " INTEGER "+")";
         db.execSQL(CREATE_HEALTH_TABLE);
@@ -69,7 +69,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //add
     public void addHealthHandler(Health health) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ID2, health.getID());
         values.put(COLUMN_NAME20, health.getUserID());
         values.put(COLUMN_NAME21, health.getDate());
         values.put(COLUMN_NAME22, health.getWeight());
@@ -89,24 +88,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            int result_0 = cursor.getInt(0);
+            cursor.getInt(0);
             int result_1 = cursor.getInt(1);
             String result_2 = cursor.getString(2);
             int result_3 = cursor.getInt(3);
             int result_4 = cursor.getInt(4);
             int result_5 = cursor.getInt(5);
 
-            result += String.valueOf(result_0) + " " + String.valueOf(result_1) + " " + result_2 + " " + String.valueOf(result_3) +" " + String.valueOf(result_4) +" "+ String.valueOf(result_5) +" "+
+            result += "User ID: "+String.valueOf(result_1) + " Date: " + result_2 + " Weight: " + String.valueOf(result_3) +" Blood Pressure: " + String.valueOf(result_4) +" Fetal Heartbeat: "+ String.valueOf(result_5) +" "+
                     System.getProperty("line.separator");
             while (cursor.moveToNext()) {
-                result_0 = cursor.getInt(0);
+                cursor.getInt(0);
                 result_1 = cursor.getInt(1);
                 result_2 = cursor.getString(2);
                 result_3 = cursor.getInt(3);
                 result_4 = cursor.getInt(4);
                 result_5 = cursor.getInt(5);
 
-                result += String.valueOf(result_0) + " " + String.valueOf(result_1) + " " + result_2 + " " + String.valueOf(result_3) +" " + String.valueOf(result_4) +" "+ String.valueOf(result_5) +" "+
+                result += "User ID: "+String.valueOf(result_1) + " Date: " + result_2 + " Weight: " + String.valueOf(result_3) +" Blood Pressure: " + String.valueOf(result_4) +" Fetal Heartbeat: "+ String.valueOf(result_5) +" "+
                         System.getProperty("line.separator");
             }
             cursor.close();
@@ -122,7 +121,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //add
     public void addApptHandler(Appointment appt) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ID1, appt.getID());
         values.put(COLUMN_NAME10, appt.getUserID());
         values.put(COLUMN_NAME11, appt.getDate());
         values.put(COLUMN_NAME12, appt.getDescription());
@@ -132,18 +130,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     //delete
-    public boolean deleteApptHandler(int aptid) {
+    public boolean deleteApptHandler(String date) {
         boolean result = false;
-        String query = "Select*FROM " + TABLE_APPOINTMENT + " WHERE " + COLUMN_ID1 + " = '" + String.valueOf(aptid) + "'";
+        String query = "Select*FROM " + TABLE_APPOINTMENT + " WHERE " + COLUMN_NAME11 + " = '" + date + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Appointment apt = new Appointment();
         if (cursor.moveToFirst()) {
-            apt.setID(Integer.parseInt(cursor.getString(0)));
+            apt.setDate(cursor.getString(2));
 
-            db.delete(TABLE_APPOINTMENT, COLUMN_ID1 + "=?",
+            db.delete(TABLE_APPOINTMENT, COLUMN_NAME11 + "=?",
                     new String[] {
-                            String.valueOf(apt.getID())
+                            apt.getDate()
                     });
             cursor.close();
             result = true;
@@ -163,7 +161,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Appointment appt = new Appointment();
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            appt.setID(Integer.parseInt(cursor.getString(0)));
+            cursor.getString(0);
             appt.setUserID(Integer.parseInt(cursor.getString(1)));
             appt.setDate(cursor.getString(2));
             appt.setDescription(cursor.getString(3));
@@ -176,14 +174,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return appt;
     }
 
-    public boolean updateApptHandler(int ID, int uid, String date, String description ) {
+    public boolean updateApptHandler(int uid, String date, String description ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues args = new ContentValues();
-        args.put(COLUMN_ID1, ID);
         args.put(COLUMN_NAME10, uid);
         args.put(COLUMN_NAME11, date);
         args.put(COLUMN_NAME12, description);
-        return db.update(TABLE_APPOINTMENT, args, COLUMN_ID1 + "=" + ID, null) > 0;
+        return db.update(TABLE_APPOINTMENT, args, COLUMN_NAME11 + "=" + date, null) > 0;
     }
 
     public String loadApptHandler(int userid) {
@@ -194,19 +191,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            int result_0 = cursor.getInt(0);
+            cursor.getInt(0);
             String result_1 = cursor.getString(1);
             String result_2 = cursor.getString(2);
             String result_3 = cursor.getString(3);
 
-            result += String.valueOf(result_0) + " " + result_1 + " " + result_2 + " " + result_3 +" " +
+            result += "User ID: "+result_1 + " Date: " + result_2 + " Description: " + result_3 +" " +
                     System.getProperty("line.separator");
             while (cursor.moveToNext()) {
-                result_0 = cursor.getInt(0);
+                cursor.getInt(0);
                 result_1 = cursor.getString(1);
                 result_2 = cursor.getString(2);
                 result_3 = cursor.getString(3);
-                result += String.valueOf(result_0) + " " + result_1 + " " + result_2 + " " + result_3 +" " +
+                result += "User ID: "+result_1 + " Date: " + result_2 + " Description: " + result_3 +" " +
                         System.getProperty("line.separator");
             }
             cursor.close();
@@ -255,7 +252,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public String loadHandler() {
-        String result = null;
+        String result = "";
         String query = "Select*FROM " + TABLE_USERS;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -265,7 +262,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             String result_2 = cursor.getString(2);
             String result_3 = cursor.getString(3);
             String result_4 = cursor.getString(4);
-            result += String.valueOf(result_0) + " " + result_1 + " " + result_2 + " " + result_3 +" " + result_4 +
+            result += "User ID: "+String.valueOf(result_0) + " Name: " + result_1 + " Password: " + result_2 + " Delivery Date: " + result_3 +" Initial Weight: " + result_4 +
                     System.getProperty("line.separator");
         }
         cursor.close();
@@ -323,7 +320,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             cursor2.close();
             result3 = true;
         }
-        result = result1 || result2 || result3;
+        result = result1 | result2 | result3;
         db2.close();
         return result;
     }
