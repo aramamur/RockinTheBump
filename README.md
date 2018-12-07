@@ -4,7 +4,6 @@ Android Pregnancy Tracker App for ECE 574
 This is for Android API Level 19 and below.  
 It works on the KitKat 4.4 OS and is created for the Samsung Note 4.
 
-Currently the features are:
 
 Functional Requirements:
 1.	Shall track pregnant women’s weight, and give appropriate weight recommendations as well as calories and suggest snacks.  Also must list foods to avoid.
