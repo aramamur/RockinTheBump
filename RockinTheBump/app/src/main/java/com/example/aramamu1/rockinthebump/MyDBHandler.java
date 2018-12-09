@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class MyDBHandler extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "new1.db";
+    private static final String DATABASE_NAME = "new2.db";
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_ID = "UserID";
     public static final String COLUMN_NAME = "UserName";
@@ -30,6 +32,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_NAME22 = "Weight";
     public static final String COLUMN_NAME23 = "BloodPressure";
     public static final String COLUMN_NAME24 = "FetalHB";
+
+    public static final String TABLE_PICTURES = "pictures";
+    public static final String COLUMN_ID3 = "PictureID";
+    public static final String COLUMN_NAME30 = "UserID";
+    public static final String COLUMN_NAME31 = "Picture";
 
 
     //initialize the database
@@ -54,6 +61,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 + " INTEGER, "+ COLUMN_NAME24 + " INTEGER "+")";
         db.execSQL(CREATE_HEALTH_TABLE);
 
+        String CREATE_TABLE_PICTURES = "CREATE TABLE " +
+                TABLE_PICTURES + "(" + COLUMN_ID3 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME30
+                + " INTEGER, "+COLUMN_NAME31 + " TEXT "+")";
+        db.execSQL(CREATE_TABLE_PICTURES);
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
@@ -61,8 +73,67 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HEALTH);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURES);
         onCreate(db);
 
+    }
+
+    //for table pictures
+
+    //add
+    //add
+    public void addPictureHandler(Picture pic) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME30, pic.getUserID());
+        values.put(COLUMN_NAME31, pic.getPicture());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_PICTURES, null, values);
+        db.close();
+    }
+
+    public boolean isPicture(int userid)
+    {
+        boolean result = false;
+        String query = "Select * FROM " + TABLE_PICTURES + " WHERE " +
+                COLUMN_NAME30 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst())
+        {
+            result = true;
+        }
+        return result;
+    }
+
+    //load
+    public ArrayList<Picture> loadPictureHandler(int userid) {
+        ArrayList<Picture> result = new ArrayList<>();
+        String query = "Select * FROM " + TABLE_PICTURES + " WHERE " +
+                COLUMN_NAME30 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            Picture pic = new Picture();
+            cursor.moveToFirst();
+            cursor.getInt(0);
+            cursor.getInt(1);
+            pic.setPicture(cursor.getString(2));
+            result.add(pic);
+
+            while (cursor.moveToNext()) {
+                Picture pic2 = new Picture();
+                cursor.getInt(0);
+                cursor.getInt(1);
+                pic2.setPicture(cursor.getString(2));
+                result.add(pic2);
+            }
+            cursor.close();
+        } else {
+            result = null;
+        }
+        cursor.close();
+        db.close();
+        return result;
     }
 
     //for health table
@@ -274,6 +345,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         boolean result1 = false;
         boolean result2 = false;
         boolean result3 = false;
+        boolean result4 = false;
         boolean result = false;
         String query = "Select*FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + " = '" + String.valueOf(userid) + "'";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -320,8 +392,27 @@ public class MyDBHandler extends SQLiteOpenHelper {
             cursor2.close();
             result3 = true;
         }
-        result = result1 | result2 | result3;
         db2.close();
+
+        String query3 = "Select*FROM " + TABLE_PICTURES + " WHERE " + COLUMN_NAME30 + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db3 = this.getWritableDatabase();
+        Cursor cursor3 = db3.rawQuery(query3, null);
+        Picture pic = new Picture();
+        if (cursor3.moveToFirst()) {
+            pic.setUserID(Integer.parseInt(cursor3.getString(1)));
+
+            db3.delete(TABLE_PICTURES, COLUMN_NAME30 + "=?",
+                    new String[] {
+                            String.valueOf(pic.getUserID())
+                    });
+            cursor3.close();
+            result4 = true;
+        }
+        db3.close();
+
+        //see if any of the results returned true
+        result = result1 | result2 | result3 | result4;
+
         return result;
     }
 

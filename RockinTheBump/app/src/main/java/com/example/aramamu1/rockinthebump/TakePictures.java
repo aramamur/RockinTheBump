@@ -1,14 +1,8 @@
 package com.example.aramamu1.rockinthebump;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,27 +13,39 @@ import	android.net.Uri;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import 	java.io.File;
 import android.os.Environment;
 
 
-import android.widget.ImageView;
+
+import android.widget.TextView;
 
 
 public class TakePictures extends AppCompatActivity {
 
-    public static final String FILE_URI_KEY = "FILE_URI_KEY";
-    private ImageView bumppic;
     private File filename;
+    public static final String FILE_URI_KEY = "FILE_URI_KEY";
+    //store user settings here once we get them
     Uri imageFileUri;
-    private String mCurrentPhotoPath;
+    String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 0;
+    TextView textDesc;
+    int uid;
+
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile =
+            "com.example.aramamu1.rockinthebump";
+    //Shared preferences keys
+    private final String USERID_KEY = "userID";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_take_pictures);
         if( savedInstanceState != null ){
             String fileUriString = savedInstanceState.getString(FILE_URI_KEY);
             if( fileUriString != null ) {
@@ -47,15 +53,15 @@ public class TakePictures extends AppCompatActivity {
             }
         }
 
-        setContentView(R.layout.activity_take_pictures);
-
-
-        bumppic = (ImageView) findViewById(R.id.bumppic);
-
+        textDesc = (TextView)findViewById(R.id.textDesc);
+        //get the user id
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        uid = mPreferences.getInt(USERID_KEY, uid);
     }
 
 
     public void storePicture(View view) throws IOException {
+
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         filename = createImageFile();
         imageFileUri = Uri.fromFile(filename);
@@ -63,7 +69,31 @@ public class TakePictures extends AppCompatActivity {
         startActivityForResult(cameraIntent, REQUEST_TAKE_PHOTO );
     }
 
-    private File createImageFile() throws IOException {
+    public void viewPicture(View view){
+
+        MyDBHandler db = new MyDBHandler(this, null, null, 1);
+        boolean result = db.isPicture(uid);
+        if(result == true) {
+           /* //debug database of pictures
+            ArrayList<Picture> images = new ArrayList<>();
+            MyDBHandler dbimage = new MyDBHandler(this, null, null, 1);
+            images= dbimage.loadPictureHandler(uid);
+            String filename = "Size of array: "+images.size()+System.getProperty("line.separator");
+            for(int i = 0; i<images.size();i++){
+                filename += images.get(i).getPicture()+ " " +System.getProperty("line.separator");
+            }
+            textDesc.setText(filename);*/
+
+           Intent intent = new Intent(this, PictureGallery.class);
+           startActivity(intent);
+        }
+        else{
+            textDesc.setText("No pictures found");
+        }
+
+    }
+
+   private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -80,23 +110,22 @@ public class TakePictures extends AppCompatActivity {
             }
         }
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                mediaStorageDir      /* directory */
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                mediaStorageDir      //directory
         );
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
+        imageFileUri = Uri.fromFile(image);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( resultCode == RESULT_OK ){
-            Bitmap cameraBitmap = BitmapFactory.decodeFile(imageFileUri.getPath());
-            ImageView imageView = (ImageView)findViewById(R.id.bumppic);
-            imageView.setImageBitmap(cameraBitmap);
-        }
+        //store file in database
+       //String imagepath = imageFileUri.getPath();
+       MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+       Picture pic = new Picture(uid, mCurrentPhotoPath);
+       dbHandler.addPictureHandler(pic);
+
+        return image;
     }
 
     @Override
@@ -105,6 +134,7 @@ public class TakePictures extends AppCompatActivity {
         String imageFileUriString = imageFileUri.getPath();
         outState.putString(FILE_URI_KEY, imageFileUriString);
     }
+
 
 }
 

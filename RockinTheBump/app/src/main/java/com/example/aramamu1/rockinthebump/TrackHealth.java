@@ -55,7 +55,7 @@ public class TrackHealth extends AppCompatActivity {
         uid = mPreferences.getInt(USERID_KEY, uid);
         uname = mPreferences.getString(USERNAME_KEY, uname);
         udate = mPreferences.getString(DELIVERYDATE_KEY, udate);
-        uweek = mPreferences.getString(WEEK_KEY, udate);
+        uweek = mPreferences.getString(WEEK_KEY, uweek);
         initial_weight = mPreferences.getString(INITWEIGHT_KEY, initial_weight);
 
         final Calendar cal = Calendar.getInstance();
