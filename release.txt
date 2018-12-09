@@ -6,10 +6,11 @@ Updated to use the weight as the starting weight
 When deleting user deletes appt and health data 
 Autoincrement works
 Has ability to take pics but camera functionality and picture storage could use some work
-Gallery and camera work for the most part.  
+Gallery and camera work.
 Implemented database that stores the location of the files that the picture takes- stored to external storage private to the app (not in traditional Image Gallery)
 The gallery uses the location of these files names in order to display the gallery
 Small minor changes- using Picasso for loading images
+Made the gallery seperate from take pictures because of errors with the imageview and app intermittently crashing.
 
 Still needs:
 

@@ -69,43 +69,21 @@ public class TakePictures extends AppCompatActivity {
         startActivityForResult(cameraIntent, REQUEST_TAKE_PHOTO );
     }
 
-    public void viewPicture(View view){
 
-        MyDBHandler db = new MyDBHandler(this, null, null, 1);
-        boolean result = db.isPicture(uid);
-        if(result == true) {
-           /* //debug database of pictures
-            ArrayList<Picture> images = new ArrayList<>();
-            MyDBHandler dbimage = new MyDBHandler(this, null, null, 1);
-            images= dbimage.loadPictureHandler(uid);
-            String filename = "Size of array: "+images.size()+System.getProperty("line.separator");
-            for(int i = 0; i<images.size();i++){
-                filename += images.get(i).getPicture()+ " " +System.getProperty("line.separator");
-            }
-            textDesc.setText(filename);*/
-
-           Intent intent = new Intent(this, PictureGallery.class);
-           startActivity(intent);
-        }
-        else{
-            textDesc.setText("No pictures found");
-        }
-
-    }
 
    private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "Camera");
+                Environment.DIRECTORY_PICTURES), "RockinTheBump");
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                Log.d("Camera", "failed to create directory");
+                Log.d("RockinTheBump", "failed to create directory");
                 return null;
             }
         }
@@ -128,7 +106,7 @@ public class TakePictures extends AppCompatActivity {
         return image;
     }
 
-    @Override
+   @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         String imageFileUriString = imageFileUri.getPath();

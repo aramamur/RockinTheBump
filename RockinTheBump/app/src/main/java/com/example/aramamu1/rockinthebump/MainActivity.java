@@ -197,6 +197,24 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_pictures) {
             if(uid != 0) {
+                MyDBHandler db = new MyDBHandler(this, null, null, 1);
+                boolean result = db.isPicture(uid);
+                if(result == true) {
+                    Intent intent = new Intent(this, PictureGallery.class);
+                    startActivity(intent);
+                }
+                else{
+                    textResponse.setText("No pictures found to view.  Please take a pic first.");
+                }
+            }
+            else{
+                textResponse.setText("Please login to access this content!");
+            }
+
+        }
+        else if (id == R.id.nav_takepic) {
+            if(uid != 0) {
+
                 Intent intent = new Intent(this, TakePictures.class);
                 startActivity(intent);
             }
@@ -204,7 +222,8 @@ public class MainActivity extends AppCompatActivity
                 textResponse.setText("Please login to access this content!");
             }
 
-        } else if (id == R.id.nav_contractions) {
+        }
+        else if (id == R.id.nav_contractions) {
             Intent intent = new Intent(this, ContractionTimer.class);
             startActivity(intent);
         }

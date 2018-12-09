@@ -16,7 +16,10 @@
             android:title="Track Health" />
         <item
             android:id="@+id/nav_pictures"
-            android:title="Store Pictures" />
+            android:title="View Picture Gallery" />
+        <item
+            android:id="@+id/nav_takepic"
+            android:title="Take Pictures" />
         <item
             android:id="@+id/nav_contractions"
             android:title="Contraction Timer" />
