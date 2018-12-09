@@ -9,6 +9,7 @@ Has ability to take pics but camera functionality and picture storage could use 
 Gallery and camera work for the most part.  
 Implemented database that stores the location of the files that the picture takes- stored to external storage private to the app (not in traditional Image Gallery)
 The gallery uses the location of these files names in order to display the gallery
+Small minor changes- using Picasso for loading images
 
 Still needs:
 

@@ -2,7 +2,7 @@ package com.example.aramamu1.rockinthebump;
 
 public class Picture {
     int userid;
-    String picture;
+    String picture = null;
     // constructors
     public Picture() {}
     public Picture(int userid, String picture) {

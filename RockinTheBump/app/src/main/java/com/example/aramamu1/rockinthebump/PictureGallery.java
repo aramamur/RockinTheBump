@@ -25,6 +25,7 @@ public class PictureGallery extends AppCompatActivity {
         //get the user id
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         uid = mPreferences.getInt(USERID_KEY, uid);
+        ArrayList<Picture> photos = loadPictures();
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
@@ -33,15 +34,16 @@ public class PictureGallery extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<Picture> photos = loadPictures();
         MyAdapter adapter = new MyAdapter(getApplicationContext(), photos);
         recyclerView.setAdapter(adapter);
+
+
 
     }
 
     private ArrayList<Picture> loadPictures(){
         //get file locations for pictures based on database entry for userid
-        ArrayList<Picture> images = new ArrayList<>();
+        ArrayList<Picture> images;
         MyDBHandler db = new MyDBHandler(this, null, null, 1);
         images= db.loadPictureHandler(uid);
         return images;

@@ -18,50 +18,66 @@ import java.util.ArrayList;
 
 
 
-    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-        private ArrayList<Picture> galleryList;
-        private Context context;
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-        public MyAdapter(Context context, ArrayList<Picture> galleryList) {
-            this.galleryList = galleryList;
-            this.context = context;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView title;
+        private ImageView img;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            title = (TextView)view.findViewById(R.id.title);
+            img = (ImageView) view.findViewById(R.id.img);
+
         }
+    }
 
-        @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell_layout, viewGroup, false);
-            return new ViewHolder(view);
-        }
+    private ArrayList<Picture> galleryList;
+    private Context context;
 
-        @Override
-        public void onBindViewHolder(MyAdapter.ViewHolder viewHolder, int i) {
-            String pic_name = "Picture " + i;
-            viewHolder.title.setText(pic_name);
-
-            if(!galleryList.isEmpty()) {
-                if (galleryList.get(i).getPicture() != null) {
-                    Uri uri = Uri.fromFile(new File(galleryList.get(i).getPicture()));
-                    Picasso.with(context).load(uri).centerCrop().resize(240, 120).into(viewHolder.img);
-                }
-            }
-
-         }
-
-        @Override
-        public int getItemCount() {
-            return galleryList.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder{
-            private TextView title;
-            private ImageView img;
-            public ViewHolder(View view) {
-                super(view);
-
-                title = (TextView)view.findViewById(R.id.title);
-                img = (ImageView) view.findViewById(R.id.img);
-            }
-        }
+    public MyAdapter(Context context, ArrayList<Picture> galleryList) {
+        this.galleryList = galleryList;
+        this.context = context;
 
     }
 
+    @Override
+    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        Context context = viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View contactView = inflater.inflate(R.layout.cell_layout, viewGroup, false);
+        // Return a new holder instance
+        ViewHolder viewHolder = new ViewHolder(contactView);
+        return viewHolder;
+
+        //View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell_layout, viewGroup, false);
+        //return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MyAdapter.ViewHolder viewHolder, int i) {
+        String pic_name = "Picture " + i;
+        viewHolder.title.setText(pic_name);
+
+        if(!galleryList.isEmpty()) {
+            if (galleryList.get(i).getPicture() != null) {
+                String picfilename = galleryList.get(i).getPicture();
+                File fileuri = new File(picfilename);
+                Uri uri = Uri.fromFile(fileuri);
+                //Picasso.with(context).load(uri).centerCrop().resize(240, 120).into(viewHolder.img);
+                Picasso.with(viewHolder.itemView.getContext()).load(uri).centerCrop().resize(240, 120).into(viewHolder.img);
+            }
+        }
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return galleryList.size();
+    }
+
+
+
+}
