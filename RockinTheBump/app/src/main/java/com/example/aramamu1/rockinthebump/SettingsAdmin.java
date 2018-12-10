@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Settings extends AppCompatActivity {
+public class SettingsAdmin extends AppCompatActivity {
 
     TextView lst;
     EditText userid;
@@ -43,7 +43,7 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings_admin);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         lst = (TextView) findViewById(R.id.lst);
         userid = (EditText) findViewById(R.id.userid);
@@ -118,9 +118,32 @@ public class Settings extends AppCompatActivity {
         preferencesEditor.apply();
     }
 
+    public void findUser (View view) {
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        User user = dbHandler.findHandler(Integer.parseInt(userid.getText().toString()), userpswd.getText().toString());
+        if (user != null) {
+            lst.setText(String.valueOf(user.getID()) +" "+ user.getUserName()+" "+user.getDeliveryDate()+" "+String.valueOf(user.getInitialWeight()));
 
+        } else {
+            lst.setText("No Match Found");
+        }
+    }
 
+    public void loadUser(View view) {
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        String response = dbHandler.loadHandler();
+        if(response == "") {
+            lst.setText("No records found.");
+        }
+        else{
+            lst.setText(response);
+        }
 
+        userid.setText("");
+        username.setText("");
+        userpswd.setText("");
+
+    }
 
     public void deleteUser(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null,
@@ -146,7 +169,35 @@ public class Settings extends AppCompatActivity {
 
     }
 
+    public void updateUser(View view) {
+        MyDBHandler dbHandler = new MyDBHandler(this, null,
+                null, 1);
+        int id = Integer.parseInt(userid.getText().toString());
+        String name = username.getText().toString();
+        String pswd = userpswd.getText().toString();
+        String ddate = deliverydate;
+        String cweek = currentWeek;
+        String weight = initweight.getText().toString();
+        boolean result = dbHandler.updateHandler(id,name, pswd, ddate, weight);
+        if (result) {
+            userid.setText("");
+            username.setText("");
+            userpswd.setText("");
+            initweight.setText("");
+            lst.setText("Record Updated");
 
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+            preferencesEditor.putInt(USERID_KEY, id);
+            preferencesEditor.putString(USERNAME_KEY, name);
+            preferencesEditor.putString(DELIVERYDATE_KEY, ddate);
+            preferencesEditor.putString(WEEK_KEY, cweek);
+            preferencesEditor.putString(INITWEIGHT_KEY, weight);
+            preferencesEditor.apply();
+        } else
+            lst.setText("No Match Found");
+
+
+    }
 
     public String return_weeks(String deliveryDate) throws ParseException {
 

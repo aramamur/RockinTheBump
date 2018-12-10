@@ -228,8 +228,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
         else if (id == R.id.nav_user) {
-            Intent intent = new Intent(this, Settings.class);
-            startActivity(intent);
+
+            if(uid == 1) {
+                Intent intent = new Intent(this, SettingsAdmin.class);
+                startActivity(intent);
+            }
+            else
+            {
+                Intent intent = new Intent(this, Settings.class);
+                startActivity(intent);
+            }
         }
         else if (id == R.id.nav_contact) {
             Intent intent = new Intent(this, ContactInfo.class);

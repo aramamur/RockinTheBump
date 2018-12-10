@@ -83,7 +83,6 @@ public class TakePictures extends AppCompatActivity {
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                Log.d("RockinTheBump", "failed to create directory");
                 return null;
             }
         }

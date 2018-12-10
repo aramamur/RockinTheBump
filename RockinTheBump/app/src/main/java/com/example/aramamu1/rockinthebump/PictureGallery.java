@@ -34,7 +34,7 @@ public class PictureGallery extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
-        MyAdapter adapter = new MyAdapter(getApplicationContext(), photos);
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), photos);
         recyclerView.setAdapter(adapter);
 
 

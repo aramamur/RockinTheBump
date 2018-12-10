@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings">
+    tools:context=".SettingsAdmin">
 
     <EditText
         android:id="@+id/userpswd"
@@ -69,7 +69,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:background="@android:drawable/editbox_background"
-        android:text="Response here."
+        android:text="Users list here"
         android:textColor="#ff0000"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,8 +81,8 @@
 
     <Button
         android:id="@+id/btnadd"
-        android:layout_width="84dp"
-        android:layout_height="39dp"
+        android:layout_width="74dp"
+        android:layout_height="43dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -91,10 +91,27 @@
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.957" />
+
+    <Button
+        android:id="@+id/btnfind"
+        android:layout_width="84dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="436dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="findUser"
+        android:text="FIND"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.192" />
 
     <Button
         android:id="@+id/btndelete"
@@ -109,6 +126,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.685"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957" />
+
+    <Button
+        android:id="@+id/btnupdate"
+        android:layout_width="85dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="updateUser"
+        android:text="UPDATE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.996"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.957" />
@@ -148,5 +182,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deliverydate" />
+
+    <Button
+        android:id="@+id/loadbutton"
+        android:layout_width="74dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:onClick="loadUser"
+        android:text="Load"
+        app:layout_constraintBottom_toTopOf="@+id/btnfind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lst" />
 
 </android.support.constraint.ConstraintLayout>

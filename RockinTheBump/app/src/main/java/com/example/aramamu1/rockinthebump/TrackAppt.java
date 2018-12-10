@@ -103,7 +103,7 @@ public class TrackAppt extends AppCompatActivity {
      * @param view View that was clicked
      */
     public void showDatePicker(View view) {
-        DialogFragment newFragment = new DatePickerFragment1();
+        DialogFragment newFragment = new AppointmentDateFragment();
         newFragment.show(getSupportFragmentManager(),
                 "datePicker");
     }

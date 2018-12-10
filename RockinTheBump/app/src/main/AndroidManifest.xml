@@ -61,7 +61,10 @@
         <activity
             android:name=".TakePictures"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".PictureGallery" android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PictureGallery"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".SettingsAdmin" android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
