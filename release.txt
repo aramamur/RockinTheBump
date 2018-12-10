@@ -20,6 +20,8 @@ Nice to have next steps after project submittal for class:
 * Plot of the weight, fetal hb, or bloodpressure.
 * Better UI!- some images.
 * Extensive production testing.
+* Track calories
+* Discussion board or crowdsourcing feature for advice
 
 
 
