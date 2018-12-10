@@ -172,16 +172,31 @@ public class Settings extends AppCompatActivity {
     public void updateUser(View view) {
         MyDBHandler dbHandler = new MyDBHandler(this, null,
                 null, 1);
-        boolean result = dbHandler.updateHandler(Integer.parseInt(
-                userid.getText().toString()), username.getText().toString(),userpswd.getText().toString(), deliverydate, initweight.getText().toString());
+        int id = Integer.parseInt(userid.getText().toString());
+        String name = username.getText().toString();
+        String pswd = userpswd.getText().toString();
+        String ddate = deliverydate;
+        String cweek = currentWeek;
+        String weight = initweight.getText().toString();
+        boolean result = dbHandler.updateHandler(id,name, pswd, ddate, weight);
         if (result) {
             userid.setText("");
             username.setText("");
             userpswd.setText("");
             initweight.setText("");
             lst.setText("Record Updated");
+
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+            preferencesEditor.putInt(USERID_KEY, id);
+            preferencesEditor.putString(USERNAME_KEY, name);
+            preferencesEditor.putString(DELIVERYDATE_KEY, ddate);
+            preferencesEditor.putString(WEEK_KEY, cweek);
+            preferencesEditor.putString(INITWEIGHT_KEY, weight);
+            preferencesEditor.apply();
         } else
             lst.setText("No Match Found");
+
+
     }
 
     public String return_weeks(String deliveryDate) throws ParseException {
