@@ -15,6 +15,7 @@ When updating a user it updates the shared preferences file.
 40 tips for each week, includes appointment tips and food tips. 
 Renamed file
 Made a SettingsAdmin so I can access the secret settings part where I can see all the user info.  The userid account for id=1 needs to be created in order to do this.
+Add check if userid is not available someone can't create a duplicate account.
 
 Nice to have next steps after project submittal for class:
 * Plot of the weight, fetal hb, or bloodpressure.

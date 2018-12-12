@@ -288,6 +288,20 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //for the user database
 
+    public boolean isUserID(int userid)
+    {
+        boolean result = false;
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_ID + " = '" + String.valueOf(userid) + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst())
+        {
+            result = true;
+        }
+        return result;
+    }
+
     public void addHandler(User user) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID, user.getID());

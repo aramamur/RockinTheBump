@@ -95,27 +95,33 @@ public class Settings extends AppCompatActivity {
         String ddate = deliverydate;
         String cweek = currentWeek;
         String weight = initweight.getText().toString();
-        User user = new User(id,name, pswd, ddate, weight);
-        dbHandler.addHandler(user);
-        lst.setText("user updated ");
 
-        //put the health stats in the Health database
+        if(dbHandler.isUserID(id) == false) {
+            User user = new User(id, name, pswd, ddate, weight);
+            dbHandler.addHandler(user);
+            lst.setText("user updated ");
 
-        Health health = new Health(id, start_date, Integer.parseInt(initweight.getText().toString()), 0, 0);
-        dbHandler.addHealthHandler(health);
+            //put the health stats in the Health database
 
-        userid.setText("");
-        username.setText("");
-        userpswd.setText("");
-        initweight.setText("");
+            Health health = new Health(id, start_date, Integer.parseInt(initweight.getText().toString()), 0, 0);
+            dbHandler.addHealthHandler(health);
 
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putInt(USERID_KEY, id);
-        preferencesEditor.putString(USERNAME_KEY, name);
-        preferencesEditor.putString(DELIVERYDATE_KEY, ddate);
-        preferencesEditor.putString(WEEK_KEY, cweek);
-        preferencesEditor.putString(INITWEIGHT_KEY, weight);
-        preferencesEditor.apply();
+            userid.setText("");
+            username.setText("");
+            userpswd.setText("");
+            initweight.setText("");
+
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+            preferencesEditor.putInt(USERID_KEY, id);
+            preferencesEditor.putString(USERNAME_KEY, name);
+            preferencesEditor.putString(DELIVERYDATE_KEY, ddate);
+            preferencesEditor.putString(WEEK_KEY, cweek);
+            preferencesEditor.putString(INITWEIGHT_KEY, weight);
+            preferencesEditor.apply();
+        }
+        else{
+            lst.setText("UserID taken, please choose another. ");
+        }
     }
 
 
