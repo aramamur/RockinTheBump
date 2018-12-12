@@ -12,6 +12,14 @@ Functional Requirements:
 4.	Shall give weekly update about pregnancy stage. Shall advice for upcoming appointments and how to prepare.
 5.	Shall track contractions and give suggestions on when to call the hospital.  
 
+Nice to have next steps after project submittal for class:
+
+1. Plot of the weight, fetal hb, or bloodpressure. Use graphview library for this.
+2. Better UI!- some images.
+3. Track calories
+4. Discussion board or crowdsourcing feature for advice
+5. Cross OS platform and test on other versions of Android- it is built for target sdk 28 so it should work for higher versions but it hasn't been tested.
+6. Extensive production testing.
 
 References on Android programming for this assignment:
 
