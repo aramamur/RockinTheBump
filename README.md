@@ -20,6 +20,7 @@ Nice to have next steps after project submittal for class:
 4. Discussion board or crowdsourcing feature for advice
 5. Cross OS platform and test on other versions of Android- it is built for target sdk 28 so it should work for higher versions but it hasn't been tested.
 6. Extensive production testing.
+7. Using user data to predict pregnancy complications.
 
 References on Android programming for this assignment:
 
