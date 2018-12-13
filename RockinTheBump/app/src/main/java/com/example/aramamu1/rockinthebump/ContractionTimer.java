@@ -43,16 +43,17 @@ public class ContractionTimer extends AppCompatActivity {
     public void timeStartContraction(View view) {
         contractionStatus.setText("Contraction started button pushed last.");
 
-
-
         if(start == true){
+            //initialize
             start = false;
             contractionTimerStart = SystemClock.uptimeMillis();
             startTime = contractionTimerStart;
             contractionTimerHandler.postDelayed(updateContractionTimerThread, 0);
         }
         else
-        {   startTime = SystemClock.uptimeMillis();
+        {
+            //check time in between contractions and time in contractions
+            startTime = SystemClock.uptimeMillis();
             long elapsedTime = startTime - endTime;
             long elapsedSeconds = elapsedTime / 1000;
             long elapsedMinutes = elapsedSeconds / 60;
@@ -60,6 +61,7 @@ public class ContractionTimer extends AppCompatActivity {
             String minutesElapsed = Long.toString(minutesDisplay);
             String status_display = null;
 
+            //if time shows active labor
             if((minutesDisplay>=3) && (minutesDisplay<=5)){
 
                 if((secondsContraction <=60) && (secondsContraction >=45)){
@@ -72,7 +74,6 @@ public class ContractionTimer extends AppCompatActivity {
             }
             status.setText(status_display);
         }
-
 
     }
 

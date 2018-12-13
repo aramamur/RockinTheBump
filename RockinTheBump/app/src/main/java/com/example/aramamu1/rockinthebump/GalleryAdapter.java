@@ -49,8 +49,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         ViewHolder viewHolder = new ViewHolder(contactView);
         return viewHolder;
 
-        //View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell_layout, viewGroup, false);
-        //return new ViewHolder(view);
+
     }
 
     @Override
@@ -63,7 +62,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 String picfilename = galleryList.get(i).getPicture();
                 File fileuri = new File(picfilename);
                 Uri uri = Uri.fromFile(fileuri);
-                //Picasso.with(context).load(uri).centerCrop().resize(240, 120).into(viewHolder.img);
+
                 Picasso.with(viewHolder.itemView.getContext()).load(uri).centerCrop().resize(240, 120).into(viewHolder.img);
             }
         }
@@ -75,7 +74,5 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public int getItemCount() {
         return galleryList.size();
     }
-
-
 
 }
